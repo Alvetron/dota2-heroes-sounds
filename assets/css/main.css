@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow&family=Poppins:wght@200;400&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding-bottom: 2rem;
+  font-family: "Poppins", sans-serif;
+  background-color: #3a3a3a;
+  background-image: url('../img/bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  cursor: url(../cursor/dota-2/cursor_db_default_vsz3.png), auto;
+}
+
+.section {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.section__title {
+  position: relative;
+  display: inline-block;
+  min-width: 200px;
+  padding: 0.5rem 4rem 0.5rem 0.5rem;
+  color: #e6e6e6;
+  background-color: #3a3a3a;
+  background-position: 95% 20%;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  transition: width 0.2s;
+}
+
+.section__title::before{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 5px;
+  content: "";
+  
+}
+
+.section__title::before {
+  width: 100%;
+}
+
+
+.section__title--str {
+  color: #B60000 ;
+  background-image: url('../img/main-char/str-icon.png');
+}
+
+.section__title--str::before {
+  background-color: #B60000;
+}
+
+.section__title--agi {
+  color: #00B500 ;
+  background-image: url('../img/main-char/agi-icon.png');
+}
+
+.section__title--agi::before {
+  background-color: #00B500 ;
+}
+
+.section__title--int {
+  color: #4DA4EA;
+  background-image: url('../img/main-char/int-icon.png');
+}
+
+.section__title--int::before {
+  background-color: #4DA4EA;
+}
+
+
+.section-inner {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  position: relative;
+  width: 100px;
+  height: 56.25px;
+  margin: 0.5rem;
+}
+
+.card__inner {
+  position: absolute;
+  transition: transform 0.05s;
+}
+
+.card__inner::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  content: "";
+}
+
+.card__image {
+  width: 100%;
+  
+}
+
+.card__title {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%; 
+  margin: 0;
+  padding: 0.1rem 0;
+  text-align: center;
+  color: #fff;
+  background-color: rgba(31, 31, 31, 0.7);
+  opacity: 0;
+  transition: opacity 0.05s;
+}
+
+.card:hover .card__inner{
+  z-index: 10;
+  transform: scale(1.5);
+  border: 1px solid #000000;
+}
+
+.card:hover .card__title{
+  opacity: 1;
+}
