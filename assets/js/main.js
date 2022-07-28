@@ -8,10 +8,13 @@ const intSection = document.getElementById('int');
 const soundsEl = document.getElementById('sounds');
 let soundsAll;
 
-window.addEventListener('keydown', (e) => {
-  document.querySelectorAll('')
-  console.log(e.key)
-})
+let heroCard = undefined;
+let heroTitles = undefined;
+
+const searchEl = document.getElementById('search-hero');
+let abc = 'qwertyuiopasdfghjklzxcvbnmbackspace';
+let keyboardText = '';
+let removeAnim = undefined;
 
 getHeroesData(HEROES_URL);
 
@@ -19,7 +22,6 @@ async function getHeroesData(url) {
   const resp = await fetch(url);
   const respJson = await resp.json();
 
-  console.log(respJson)
   createHeroCard(respJson);
   createSounds(respJson);
 }
@@ -67,10 +69,13 @@ function createHeroCard(data) {
     }
   }
 
-
   strSection.innerHTML = strHeroes;
   agiSection.innerHTML = agiHeroes;
   intSection.innerHTML = intHeroes;
+  
+  heroCard = document.querySelectorAll('.card__inner');
+  heroTitles = document.querySelectorAll('.card__title');
+
 }
 
 function createSounds(data) {
@@ -97,7 +102,6 @@ document.getElementById('main').addEventListener('click', (e) => {
   stopPlaying()
 
   elem.play()
-  
 })
 
 function stopPlaying() {
@@ -106,3 +110,62 @@ function stopPlaying() {
     sound.currentTime = 0;
   })
 }
+
+window.addEventListener('keydown', (e) => {
+  let key = e.key;
+  key = key.toLowerCase();
+
+  if(!abc.includes(key)) return;
+
+  if(key === 'backspace') {
+    keyboardText = keyboardText.slice(0, keyboardText.length - 1);
+    searchHero(keyboardText);
+    addCardActiveClass();
+    return false;
+  }
+
+  keyboardText += key;
+  addCardActiveClass();
+  searchHero(keyboardText);
+})
+
+
+function addCardActiveClass() {
+
+  for(let i = 0; i < heroCard.length; i++) {
+    let heroName = heroTitles[i].textContent;
+
+    heroName = heroName.toLowerCase();
+    firstLetters = heroName.slice(0, keyboardText.length);
+
+    if(!firstLetters.includes(keyboardText) && keyboardText !== '') {
+      heroCard[i].classList.add('deactivated');
+    }
+    else if(heroCard[i].classList.contains('deactivated')) {
+      heroCard[i].classList.remove('deactivated');
+    }
+  }
+}
+
+function searchHero(text) {
+  searchEl.classList.contains('index') ? searchEl.classList.remove('index') : '';
+
+  if(removeAnim !== undefined) {
+    clearTimeout(removeAnim);
+    searchEl.classList.remove('anim');
+  }
+
+  searchEl.style.opacity = 1;
+  searchEl.innerHTML = keyboardText;
+  
+  removeAnim = setTimeout(() => {
+    searchEl.classList.add('anim');
+    searchEl.style.opacity = 0;
+  }, 1500)
+}
+
+searchEl.addEventListener('mouseenter', () => {
+  searchEl.classList.add('index');
+})
+
+
